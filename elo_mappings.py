@@ -1,8 +1,9 @@
 elo_map = {
 
-    "selfsub": 10,
+    "subs": 10,
     "subgift": 20,
     "normal_message_token": 2,
+    "timeouts": -10
 
 }
 
