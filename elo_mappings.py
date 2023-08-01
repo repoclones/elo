@@ -3,7 +3,7 @@ elo_map = {
     "subs": 10,
     "subgift": 20,
     "normal_message_token": 2,
-    "timeouts": -10, # positive for testing
+    "timeouts": -10, 
     "channelpointredeems": 10
 
 }
