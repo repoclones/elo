@@ -47,7 +47,6 @@ def grade_elo(message: str, context_ptr: int) -> Union[None, Tuple[str, int]]:
             rejectslist.append(message + "\n")
         return None
     raise ValueError(f"matched, but not returned value: {message}")
-    return user_affected, elo_delta
 
 def main():
     ### Load the chat logs into memory
