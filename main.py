@@ -1,7 +1,7 @@
 import json
 import os
 import re
-from typing import Tuple, Union
+from typing import Tuple, Union, List
 
 from elo_mappings import elo_mappings
 
@@ -11,17 +11,20 @@ DEBUG = True
 
 chatpath = os.path.expanduser(chatpath)
 
+with open("./assets/emotelist.txt") as f:
+    emotelist = f.readlines()
+
+emotelist = [s.strip() for s in emotelist]
+
 if DEBUG:
     rejectslist = []
 
-def repass_getuser(message: str, pattern: str) -> str:
-    res_re = re.match(pattern, message)
-    return res_re.group(1)
-
+def filter_out_strings(original_string: str, strings_to_filter: List[str]) -> str:
+    return ''.join([word for word in original_string.split() if word not in strings_to_filter])
 
 def grade_text(message: str, context_ptr: int) -> int:
-    return int(elo_mappings.elo_map["normal_message_token"] * len(message) / 10) + 1
-    pass
+    message = filter_out_strings(message, emotelist)
+    return int(elo_mappings[0]["elo_award"] * len(message) / 10) + 1
 
 def grade_elo(message: str, context_ptr: int) -> Union[None, Tuple[str, int]]:
     elo_delta = 0
@@ -34,15 +37,18 @@ def grade_elo(message: str, context_ptr: int) -> Union[None, Tuple[str, int]]:
             if re_res:
                 re_matched = True
                 if category["elo_award"]:
-                    elo_delta += category["elo_award"]
                     user_affected = re_res.group(1)
+                    if category["name"] == "stdmessage token":
+                        elo_delta += grade_text(re_res.group(2), context_ptr)
+                    else:
+                        elo_delta += category["elo_award"]
                     return user_affected, elo_delta
                 else:
                     return None
 
 
     if not re_matched:
-        #print(f"Nodelta: {message}")
+        print(f"WARNING: Unhandled log: {message}")
         if DEBUG:
             rejectslist.append(message + "\n")
         return None
@@ -61,7 +67,15 @@ def main():
 
     ## time to assign elos
     for index, message in enumerate(chatlog):
-        grade_elo(message, index)
+        grade = grade_elo(message, index)
+        if grade:
+            user, elo_delta = grade
+            if user in elolist.keys():
+                elolist[user] += elo_delta
+            else:
+                elolist[user] = elo_delta
+
+    json.dump(elolist, open("debug_elolist.json", "w"), indent=4)
 
     if DEBUG:
         with open("./debug_rejects.txt", "w") as f:
