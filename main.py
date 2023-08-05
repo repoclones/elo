@@ -47,7 +47,7 @@ def grade_text(message: str, context_ptr: int) -> int:
     if DEBUG:
         len_factor = len(message)
         rand_factor = grading_functions.normilization_function_entropy(grading_functions.grade_entropy(message))
-        debuglist.append([[elo_delta, len_factor, rand_factor], message])
+        debuglist.append([[elo_delta, len_factor, rand_factor, grading_functions.grade_entropy(message)], message])
     return elo_delta
 
 def grade_elo(message: str, context_ptr: int) -> Union[None, Tuple[str, int]]:
@@ -102,7 +102,7 @@ def main():
 
         with open("debug_elodeltas.txt", "w") as f:
             for delta in debuglist:
-                f.write(f"{delta[0][0]:< 5}{delta[0][1]:<7}{delta[0][2]:<24}{delta[1]}\n")
+                f.write(f"{delta[0][0]:< 5}{delta[0][1]:<7}{delta[0][2]:<24}{delta[0][3]:<24}{delta[1]}\n")
 
 if __name__ == "__main__":
     main()

@@ -48,8 +48,9 @@ def grade_entropy(string):
     return normalized_ratio
 
 def normilization_function_entropy(entropy_value: float) -> float:
-    # Take in the grade_entropy result and map it to follow human text values, return the multiplier between 0 and 1
-    pass
+    """
+    in the grade_entropy result and map it to follow human text values, return the multiplier between 0 and 1
+    """
     if entropy_value < 0.35:
         return 0
     elif entropy_value < 0.6:
@@ -60,7 +61,6 @@ def normilization_function_entropy(entropy_value: float) -> float:
         return map_value(entropy_value, 0.8, 0.95, 1.0, 0.3)
     else:
         return 0.3
-    
 
 if __name__ == "__main__":
     # Test the function with an example string
@@ -102,7 +102,7 @@ if __name__ == "__main__":
     #plt.ylabel('Output')
     #plt.title('Input-Output Mapping')
     #plt.grid(True)
-    #plt.savefig('input_output_mapping.png') # Save the image to disk (in PNG format)
+    #plt.savefig('debug_normilization_function_mapping.png') # Save the image to disk (in PNG format)
     #plt.show()
 
 # sorted_data = sorted(csv_dump, key=lambda x: x[2])
