@@ -28,7 +28,6 @@ def filter_out_strings(original_string: str, strings_to_filter: List[str]) -> st
     return ''.join([word for word in original_string.split() if word not in strings_to_filter])
 
 def grade_text(message: str, context_ptr: int) -> int:
-    # return elo delta
     elo_delta = 0.0
 
     message = filter_out_strings(message, emotelist)
@@ -37,7 +36,7 @@ def grade_text(message: str, context_ptr: int) -> int:
         return 1
 
     # add elo based on the message length
-    elo_delta += len(message)
+    elo_delta += len(message.split()) * 8
 
     # add elo based on the message's entropy
     elo_delta *= grading_functions.normilization_function_entropy(grading_functions.grade_entropy(message))
@@ -45,7 +44,7 @@ def grade_text(message: str, context_ptr: int) -> int:
     elo_delta *= elo_mappings[0]["elo_award"]
     elo_delta = int(elo_delta) + 1 # base of 1 for sending a message
     if DEBUG:
-        len_factor = len(message)
+        len_factor = len(message.split()) * 8
         rand_factor = grading_functions.normilization_function_entropy(grading_functions.grade_entropy(message))
         debuglist.append([[elo_delta, len_factor, rand_factor, grading_functions.grade_entropy(message)], message])
     return elo_delta
@@ -93,6 +92,8 @@ def main():
             else:
                 elolist[user] = elo_delta
 
+    elolist = dict(sorted(elolist.items(), key=lambda item: item[1], reverse=True))
+
     ### Write out the new values
     json.dump(elolist, open("debug_elolist.json", "w"), indent=4)
 
@@ -100,9 +101,11 @@ def main():
         with open("./debug_rejects.txt", "w") as f:
             f.writelines(rejectslist)
 
+        global debuglist
+        debuglist = sorted(debuglist, key=lambda x: x[0][0], reverse=True)
         with open("debug_elodeltas.txt", "w") as f:
             for delta in debuglist:
-                f.write(f"{delta[0][0]:< 5}{delta[0][1]:<7}{delta[0][2]:<24}{delta[0][3]:<24}{delta[1]}\n")
+                f.write(f"{delta[0][0]:< 5}{delta[0][1]:<7}{delta[0][2]:<20}{delta[0][3]:<20}{delta[1]}\n")
 
 if __name__ == "__main__":
     main()
