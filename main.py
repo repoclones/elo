@@ -7,9 +7,10 @@ from elo_mappings import elo_mappings
 import grading_functions
 
 chatpath = "~/.local/share/chatterino/Logs/Twitch/Channels/vedal987/"
-chatpath = "./debug_input_data/"
-LOOKAROUND_LEN = 15
 DEBUG = True
+
+if DEBUG:
+    chatpath = "./debug_input_data/"
 
 chatpath = os.path.expanduser(chatpath)
 
@@ -25,7 +26,7 @@ if DEBUG:
 def filter_out_strings(original_string: str, strings_to_filter: List[str]) -> str:
     return ''.join([word + " " for word in original_string.split() if word not in strings_to_filter])
 
-def grade_text(message: str, context_ptr: int) -> int:
+def grade_text(message: str) -> int:
     elo_delta = 0.0
 
     message = filter_out_strings(message, emotelist)
@@ -47,7 +48,7 @@ def grade_text(message: str, context_ptr: int) -> int:
         debuglist.append([[elo_delta, len_factor, rand_factor, grading_functions.grade_entropy(message)], message])
     return elo_delta
 
-def grade_elo(message: str, context_ptr: int) -> Union[None, Tuple[str, int]]:
+def grade_elo(message: str) -> Union[None, Tuple[str, int]]:
     for category in elo_mappings:
         for expression in category["re"]:
             re_res = re.match(expression, message)
@@ -55,7 +56,7 @@ def grade_elo(message: str, context_ptr: int) -> Union[None, Tuple[str, int]]:
                 if category["elo_award"]:
                     user_affected = re_res.group(1)
                     if category["name"] == "stdmessage token":
-                        elo_delta = grade_text(re_res.group(2), context_ptr)
+                        elo_delta = grade_text(re_res.group(2))
                     else:
                         elo_delta = category["elo_award"]
                     return user_affected, elo_delta
