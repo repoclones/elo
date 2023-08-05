@@ -5,6 +5,7 @@ from typing import Tuple, Union, List
 
 from elo_mappings import elo_mappings
 import grading_functions
+import emote_fetcher
 
 chatpath = "~/.local/share/chatterino/Logs/Twitch/Channels/vedal987/"
 DEBUG = True
@@ -14,10 +15,7 @@ if DEBUG:
 
 chatpath = os.path.expanduser(chatpath)
 
-with open("./assets/emotelist.txt") as f:
-    emotelist = f.readlines()
-
-emotelist = [s.strip() for s in emotelist] # all twitch and 7TV, etc. emotes that can be in the messages
+emotelist = emote_fetcher.fetch_all_emotes()
 
 if DEBUG:
     rejectslist = []
@@ -82,8 +80,8 @@ def main():
             chatlog.append(line.strip())
 
     ## time to assign elos
-    for index, message in enumerate(chatlog):
-        grade = grade_elo(message, index)
+    for message in chatlog:
+        grade = grade_elo(message)
         if grade:
             user, elo_delta = grade
             if user in elolist.keys():

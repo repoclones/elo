@@ -3,3 +3,4 @@ debug*
 .vscode
 venv
 tests/test_artifacts/
+assets/.cache
