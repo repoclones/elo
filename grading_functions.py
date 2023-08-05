@@ -47,7 +47,7 @@ def grade_entropy(string):
     
     return normalized_ratio
 
-def normilization_function_entropy(entropy_value: float) -> float:
+def normalization_function_entropy(entropy_value: float) -> float:
     """
     in the grade_entropy result and map it to follow human text values, return the multiplier between 0 and 1
     """
@@ -92,21 +92,3 @@ if __name__ == "__main__":
     for example in example_list:
         print(f"{grade_text(example, 0):<4} string: {example}")
 
-    #import matplotlib.pyplot as plt
-    ## Test the function and generate data points
-    #inputs = [x / 100 for x in range(101)]  # Generate values from 0 to 1 with a step of 0.01
-    #outputs = [normilization_function_entropy(x) for x in inputs]
-    ## Plot the data
-    #plt.plot(inputs, outputs)
-    #plt.xlabel('Input')
-    #plt.ylabel('Output')
-    #plt.title('Input-Output Mapping')
-    #plt.grid(True)
-    #plt.savefig('debug_normilization_function_mapping.png') # Save the image to disk (in PNG format)
-    #plt.show()
-
-# sorted_data = sorted(csv_dump, key=lambda x: x[2])
-# for index, data in enumerate(sorted_data):
-#     sorted_data[index] = data[0] + "\t\t\t" + str(data[1]) + "  " + str(data[2]) + "\n"
-# with open("./debug_elolist", "w") as f:
-#     f.writelines(sorted_data)

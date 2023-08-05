@@ -39,13 +39,13 @@ def grade_text(message: str, context_ptr: int) -> int:
     elo_delta += len(message.split()) * 8
 
     # add elo based on the message's entropy
-    elo_delta *= grading_functions.normilization_function_entropy(grading_functions.grade_entropy(message))
+    elo_delta *= grading_functions.normalization_function_entropy(grading_functions.grade_entropy(message))
 
     elo_delta *= elo_mappings[0]["elo_award"]
     elo_delta = int(elo_delta) + 1 # base of 1 for sending a message
     if DEBUG:
         len_factor = len(message.split()) * 8
-        rand_factor = grading_functions.normilization_function_entropy(grading_functions.grade_entropy(message))
+        rand_factor = grading_functions.normalization_function_entropy(grading_functions.grade_entropy(message))
         debuglist.append([[elo_delta, len_factor, rand_factor, grading_functions.grade_entropy(message)], message])
     return elo_delta
 
