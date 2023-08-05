@@ -4,6 +4,7 @@ import re
 from typing import Tuple, Union, List
 
 from elo_mappings import elo_mappings
+import grading_functions
 
 chatpath = "~/.local/share/chatterino/Logs/Twitch/Channels/vedal987/"
 chatpath = "./debug_input_data/"
@@ -19,15 +20,35 @@ emotelist = [s.strip() for s in emotelist] # all twitch and 7TV, etc. emotes tha
 
 if DEBUG:
     rejectslist = []
+    debuglist = []
 
 def filter_out_strings(original_string: str, strings_to_filter: List[str]) -> str:
+    if DEBUG:
+        return ''.join([word + " " for word in original_string.split() if word not in strings_to_filter])
     return ''.join([word for word in original_string.split() if word not in strings_to_filter])
 
 def grade_text(message: str, context_ptr: int) -> int:
     # return elo delta
+    elo_delta = 0.0
 
     message = filter_out_strings(message, emotelist)
-    return int(elo_mappings[0]["elo_award"] * len(message) / 10) + 1
+
+    if len(message) == 0: # if the message is too small or consists of only 
+        return 1
+
+    # add elo based on the message length
+    elo_delta += len(message)
+
+    # add elo based on the message's entropy
+    elo_delta *= grading_functions.normilization_function_entropy(grading_functions.grade_entropy(message))
+
+    elo_delta *= elo_mappings[0]["elo_award"]
+    elo_delta = int(elo_delta) + 1 # base of 1 for sending a message
+    if DEBUG:
+        len_factor = len(message)
+        rand_factor = grading_functions.normilization_function_entropy(grading_functions.grade_entropy(message))
+        debuglist.append([[elo_delta, len_factor, rand_factor], message])
+    return elo_delta
 
 def grade_elo(message: str, context_ptr: int) -> Union[None, Tuple[str, int]]:
     for category in elo_mappings:
@@ -78,6 +99,10 @@ def main():
     if DEBUG:
         with open("./debug_rejects.txt", "w") as f:
             f.writelines(rejectslist)
+
+        with open("debug_elodeltas.txt", "w") as f:
+            for delta in debuglist:
+                f.write(f"{delta[0][0]:< 5}{delta[0][1]:<7}{delta[0][2]:<24}{delta[1]}\n")
 
 if __name__ == "__main__":
     main()

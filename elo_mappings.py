@@ -1,5 +1,5 @@
 elo_mappings = [
-    {
+    { ### The 0th object in this list MUST be the std message token weight
         "name": "stdmessage token",
         "elo_award": 2,
         "re": [r"^\[\d{2}:\d{2}:\d{2}\]  (\w*): (.*)$", r"^\[\d{2}:\d{2}:\d{2}\] (\S* \S*): (.*)$"]
