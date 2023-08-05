@@ -6,12 +6,12 @@ elo_mappings = [
     },
     {
         "name": "Gifted sub",
-        "elo_award": 20,
+        "elo_award": 150,
         "re": [r"^\[\d{2}:\d{2}:\d{2}\] (\S*) gifted a Tier [123] sub to \S*$", r"^\[\d{2}:\d{2}:\d{2}\] (\S*) gifted a Tier [123] sub to \S*! This is their first Gift Sub in the channel!$"]
     },
     {
         "name": "std sub",
-        "elo_award": 10,
+        "elo_award": 75,
         "re": [r"^\[\d{2}:\d{2}:\d{2}\] (\S*) subscribed (?:with Prime|at Tier [123]). They've subscribed for \d* months(?:!|, currently on a \d* month streak!)$", r"^\[\d{2}:\d{2}:\d{2}\] (\S*) {1,2}subscribed with Prime.$", r"^\[\d{2}:\d{2}:\d{2}\] (\S*) subscribed at Tier [123].$", r"^\[\d{2}:\d{2}:\d{2}\] (\S*)  subscribed at Tier [123]\. They've subscribed for \d* months(?:!|, currently on a \d* month streak!)$", r"^\[\d{2}:\d{2}:\d{2}\] (\S*) converted from a Prime sub to a Tier [123] sub!$"]
     },
     {
@@ -21,22 +21,22 @@ elo_mappings = [
     },
     {
         "name": "timeout",
-        "elo_award": -10,
+        "elo_award": -50,
         "re": [r"^\[\d{2}:\d{2}:\d{2}\] (\S*) has been timed out for(?: \d*\w)*\.$"]
     },
     {
         "name": "permaban",
-        "elo_award": -1000,
+        "elo_award": -10000,
         "re": [r"^\[\d{2}:\d{2}:\d{2}\] (\S*) has been permanently banned.$"]
     },
     {
         "name": "channelredeem",
-        "elo_award": 10,
+        "elo_award": 100,
         "re": [r"^\[\d{2}:\d{2}:\d{2}\] (\S*) redeemed .*$"]
     },
     {
         "name": "incoming raid",
-        "elo_award": 10,
+        "elo_award": 100,
         "re": [r"^\[\d{2}:\d{2}:\d{2}\] \d* raiders from (\S*) have joined!$"]
     },
     {
