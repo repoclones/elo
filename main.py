@@ -23,9 +23,7 @@ if DEBUG:
     debuglist = []
 
 def filter_out_strings(original_string: str, strings_to_filter: List[str]) -> str:
-    if DEBUG:
-        return ''.join([word + " " for word in original_string.split() if word not in strings_to_filter])
-    return ''.join([word for word in original_string.split() if word not in strings_to_filter])
+    return ''.join([word + " " for word in original_string.split() if word not in strings_to_filter])
 
 def grade_text(message: str, context_ptr: int) -> int:
     elo_delta = 0.0

@@ -40,8 +40,6 @@ def grade_entropy(string):
     # Normalize the compression ratio to a scale from 0 to 1
     normalized_ratio = compression_ratio / 2.0
     
-    # Invert the normalized ratio so that high values represent better grades
-    #grade = 1.0 - normalized_ratio
     if normalized_ratio == 1.0: # most probably just too short
         return 0.0
     
@@ -69,26 +67,4 @@ if __name__ == "__main__":
     example_string = input()
     grade = grade_text(example_string, 0)
     print(f"Entropy grade: {grade}")
-
-    example_list = [
-        "Thanks for subscibing Coremaster! If you have any questions feel free to ask them in chat.",
-        "thanks for subscibing coremaster if you have any questions feel free to ask them in chat",
-        "discord",
-        "nihmunHypernums nihmunHypernums nihmunHypernums nihmunHypernums nihmunHypernums nihmunHypernums nihmunHypernums nihmunHypernums nihmunHypernums nihmunHypernums nihmunHypernums nihmunHypernums nihmunHypernums nihmunHypernums nihmunHypernums nihmunHypernums nihmunHypernums nihmunHypernums nihmunHypernums nihmunHypernums nihmunHypernums nihmunHypernums nihmunHypernums nihmunHypernums",
-        "Sounds painful",
-        "Im coming over!",
-        "WHY THE DOUBTFUL SATTHE END LMAO",
-        "tucker carlson KEKW",
-        "4 fingers and one thumb she knows how to count",
-        "ICANT wtf ARE THESE LINES",
-        "SOUNDS LIKE SHE IS HAVING A STROKE DIESOFCRINGE",
-        "Math check ! Is 7+8=15 correct? Is 140/10=14 correct? Is 9*7=103 correct ? Is 11-5=6 correct?",
-        "squchaHeart My Fuzzy Baby squchaHeart My Fuzzy Baby squchaHeart My Fuzzy Baby squchaHeart My Fuzzy Baby squchaHeart My Fuzzy Baby",
-        "a euro said she hopes Gillian gets kidnapped going to get milk",
-        "I wonder if minutes can be divided by 3 ?",
-        "gigaevil NeuroGunPull neurolingScared",
-        "time loop"
-    ]
-    for example in example_list:
-        print(f"{grade_text(example, 0):<4} string: {example}")
 
