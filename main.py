@@ -8,7 +8,7 @@ import grading_functions
 import emote_fetcher
 
 chatpath = "~/.local/share/chatterino/Logs/Twitch/Channels/vedal987/"
-DEBUG = True
+DEBUG = False
 
 if DEBUG:
     chatpath = "./debug_input_data/"
@@ -16,18 +16,19 @@ if DEBUG:
 chatpath = os.path.expanduser(chatpath)
 
 emotelist = emote_fetcher.fetch_all_emotes()
+emotedict = {string: True for string in emotelist} # searching from a dict is faster
 
 if DEBUG:
     rejectslist = []
     debuglist = []
 
-def filter_out_strings(original_string: str, strings_to_filter: List[str]) -> str:
+def filter_out_strings(original_string: str, strings_to_filter: dict) -> str:
     return ''.join([word + " " for word in original_string.split() if word not in strings_to_filter])
 
 def grade_text(message: str) -> int:
     elo_delta = 0.0
 
-    message = filter_out_strings(message, emotelist)
+    message = filter_out_strings(message, emotedict)
 
     if len(message) == 0: # if the message is too small or consists of only 
         return 1
