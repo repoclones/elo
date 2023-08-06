@@ -85,7 +85,7 @@ def main():
         grade = grade_elo(message)
         if grade:
             user, elo_delta = grade
-            if user in elolist.keys():
+            if user in elolist:
                 elolist[user] += elo_delta
             else:
                 elolist[user] = elo_delta

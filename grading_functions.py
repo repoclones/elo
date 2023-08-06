@@ -18,23 +18,25 @@ def map_value(value, from_min, from_max, to_min, to_max):
     # Map the normalized value to the new range
     return to_min + normalized_value * to_range
 
-def calculate_gzip_compression_ratio(string):
-    with BytesIO() as buf:
-        with gzip.GzipFile(fileobj=buf, mode='wb') as f:
-            f.write(string.encode('utf-8'))
-        compressed_data = buf.getvalue()
+def calculate_gzip_compression_ratio(string: str) -> float: # 70% of runtime
+    encoded_string = string.encode('utf-8')
+    original_size = len(encoded_string)
 
-    original_size = len(string.encode('utf-8'))
-    compressed_size = len(compressed_data)
-    
     # Ensure no division by zero when the string is empty or very short
     if original_size == 0:
         return 0.0
+
+    with BytesIO() as buf:
+        with gzip.GzipFile(fileobj=buf, mode='wb') as f:
+            f.write(encoded_string)
+        compressed_data = buf.getvalue()
+
+    compressed_size = len(compressed_data)
     
     compression_ratio = min(compressed_size / original_size, 2.0)
     return compression_ratio
 
-def grade_entropy(string):
+def grade_entropy(string: str) -> float:
     compression_ratio = calculate_gzip_compression_ratio(string)
     
     # Normalize the compression ratio to a scale from 0 to 1
@@ -63,7 +65,6 @@ def normalization_function_entropy(entropy_value: float) -> float:
 if __name__ == "__main__":
     # Test the function with an example string
     from main import grade_text
-    example_string = "the cat in the hat hat hat"
     example_string = input()
     grade = grade_text(example_string, 0)
     print(f"Entropy grade: {grade}")
