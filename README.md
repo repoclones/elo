@@ -1,19 +1,9 @@
-# chatelo
+# Neuroelo
 
-## Things to do:
+This is somehow working well, run `tests/test_rating_system.py` for some examples
 
-- negative elo for chat bans
-- extra elo for gifting subs
-- remove fossabot
-- ignore simple HUH spam
-- ignore EDM
+## How it works?
 
-## REGEX
+We count the words in a message, it gets multiplied by a constant that we set, then the message is multiplied by the normalized and weighed compression rateo of the string through gzip.
 
-"^\[\d{2}:\d{2}:\d{2}\]  \w*: (.*)$\n"gm
-
-"^\[\d{2}:\d{2}:\d{2}\] (\S*) gifted a Tier [123] sub to \S*$\n"gm
-"^# Start logging at \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} \S*$\n"gm
-"^\[\d{2}:\d{2}:\d{2}] connected$\n"gm
-"^\[\d{2}:\d{2}:\d{2}\] (\S*) has been timed out for \S*\. $\n"gm
-"^\[\d{2}:\d{2}:\d{2}\] (\S*) subscribed (?:with Prime|at Tier [123]). They've subscribed for \d* months(?:!|, currently on a \d* month streak!)$\n"gm
+This works and like quite well.
