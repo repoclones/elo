@@ -55,15 +55,22 @@ function showUserCardModal(username) {
     fetch(`/api/user/${username}`)
         .then(response => response.json())
         .then(data => {
+            const averageEloPerMessage = data.elo / data.messages.length;
             const userCard = document.getElementById('userCard');
             userCard.innerHTML = `
-                <h2>${username}</h2>
-                <p>ELO: ${data.elo}</p>
-                <p>Number of messages: ${data.messages.length}</p>
+                <h2><b>${username}</b></h2>
+                <p>ELO: <b>${data.elo}</b></p>
+                <p>Number of messages: <b>${data.messages.length}</b></p>
+                <p>Average ELO per message: <b>${averageEloPerMessage.toFixed(2)}</b></p>
                 <div class="message-list">
                     <h3>Messages:</h3>
                     <ul>
-                        ${data.messages.map(message => `<li>${message[0]}</li>`).join('')}
+                        ${data.messages.map(message => `
+                            <li>
+                                <span>${message[0]}</span>
+                                <span class="message-count">Count: ${message[1]}</span>
+                            </li>
+                        `).join('')}
                     </ul>
                 </div>
             `;

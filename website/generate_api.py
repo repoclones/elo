@@ -1,9 +1,11 @@
 import os
 import sys
 import json
+import time
 
 OUTPUT_BASE_DIR = "neuroelo_web"
 NUMBER_OF_TOP_SPOTS = 20
+DEBUG = True
 
 # not being in the root dir thing
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -45,6 +47,10 @@ def generate_api():
     check_dir(api_dir)
     check_dir(user_dir)
     for user, data in elolist.items():
+        data["messages"] = sorted(data["messages"], key=lambda item: item [1], reverse=True)
+        if DEBUG:
+            json.dump(data, open(os.path.join(user_dir, user), "w"), indent=4)
+            continue
         json.dump(data, open(os.path.join(user_dir, user), "w"))
 
     elolist = {name: data["elo"] for name, data in elolist.items()}
