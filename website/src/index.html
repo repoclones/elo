@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEURO ELO</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Include your compiled CSS file here -->
+</head>
+
+<body class="bg-gradient-to-b from-pink-main to-pink-shadow min-h-screen flex flex-col justify-center">
+    <div class="mt-12 mb-8">
+        <h1 class="text-4xl font-bold text-center text-white">(the unofficial) NEURO ELO*</h1>
+    </div>
+    <div class="bg-green-darker rounded-full shadow-md flex items-center max-w-4xl mx-auto px-4 py-2 mb-8">
+        <input id="searchBox" class="w-full py-2 px-4 rounded-l-full focus:outline-none" type="text"
+            placeholder="Your twitch username" />
+        <button id="searchButton" class="bg-beige-main hover:bg-beige-darker rounded-r-full p-2 focus:outline-none">
+            <img src="magnifying-glass.svg" alt="Search" class="w-5 h-5" />
+        </button>
+    </div>
+    <div class="flex flex-grow justify-center overflow-x-auto">
+        <div id="leaderboards" class="flex">
+            <div class="w-96 pr-4 bg-green-darker">
+                <h2 class="text-xl font-semibold text-center text-white p-2 mb-4 bg-green-main rounded-t-lg">Top Overall
+                    Earners</h2>
+                <div id="topOverall" class="bg-green-lighter p-4 shadow-md rounded-b-lg"></div>
+            </div>
+            <div class="w-96 pl-4 bg-green-darker">
+                <h2 class="text-xl font-semibold text-center text-white p-2 mb-4 bg-green-main rounded-t-lg">Top Earners
+                    from Last Stream</h2>
+                <div id="topLast" class="bg-green-lighter p-4 shadow-md rounded-b-lg"></div>
+            </div>
+        </div>
+    </div>
+    <div id="searchModal" class="modal">
+        <div class="modal-content">
+            <div id="searchResults" class="search-results"></div>
+        </div>
+    </div>
+    <div id="userCardModal" class="modal">
+        <div class="modal-content">
+            <div id="userCard" class="user-card-content"></div>
+            <button id="closeUserCard" class="close-button">Close</button>
+        </div>
+    </div>
+
+
+
+    <script src="index.js"></script>
+</body>
+
+</html>
