@@ -70,22 +70,23 @@ function showUserCardModal(username) {
             const userCardModal = document.getElementById('userCardModal');
             userCardModal.classList.remove('hidden');
             userCardModal.classList.add('flex'); // Add the flex class
+
+            // Add event listener to listen for the Escape key
+            document.addEventListener('keydown', event => {
+                if (event.key === 'Escape') {
+                    closeUserCardModal();
+                }
+            });
         })
         .catch(error => {
             console.error('Error fetching user card data:', error);
         });
+
     const userCardModal = document.getElementById('userCardModal');
     userCardModal.style.display = 'flex';
     const searchModal = document.getElementById('searchModal');
     searchModal.style.display = 'flex';
-    searchBox.style.zIndex = '-1' // Hide the search modal
-    // Close the user card modal when clicked outside the modal content
-    userCardModal.addEventListener('click', event => {
-        if (event.target === userCardModal) {
-            userCardModal.style.display = 'none';
-            searchBox.style.zIndex = '20'; // Reset the z-index of search box
-        }
-    });
+    searchBox.style.zIndex = '-1'; // Hide the search modal
 }
 
 // Add event listener to select user from search results
@@ -95,46 +96,6 @@ document.addEventListener('click', event => {
         showUserCardModal(username);
     }
 });
-
-// Function to show search results
-function showSearchResults(results) {
-    const searchResultsContainer = document.getElementById('searchResults');
-    searchResultsContainer.innerHTML = '';
-
-    results.forEach(result => {
-        const resultElement = document.createElement('div');
-        resultElement.className = 'search-result';
-        resultElement.dataset.username = result.username;
-        resultElement.textContent = result.username;
-        searchResultsContainer.appendChild(resultElement);
-    });
-}
-
-// Function to fetch and display user card
-function showUserCard(username) {
-    fetch(`/api/user/${username}`)
-        .then(response => response.json())
-        .then(data => {
-            const userCard = document.getElementById('userCard');
-            userCard.innerHTML = `
-                <div class="user-card-content">
-                    <h2>${username}</h2>
-                    <p>ELO: ${data.elo}</p>
-                    <p>Number of messages: ${data.messages.length}</p>
-                    <div class="message-list">
-                        <h3>Messages:</h3>
-                        <ul>
-                            ${data.messages.map(message => `<li>${message[0]}</li>`).join('')}
-                        </ul>
-                    </div>
-                </div>
-            `;
-            userCard.style.display = 'block';
-        })
-        .catch(error => {
-            console.error('Error fetching user card data:', error);
-        });
-}
 
 // Add event listener to search box
 const searchBox = document.getElementById('searchBox');
@@ -154,7 +115,7 @@ searchBox.addEventListener('input', () => {
 document.addEventListener('click', event => {
     if (event.target.classList.contains('search-result')) {
         const username = event.target.dataset.username;
-        showUserCard(username);
+        showUserCardModal(username);
     }
 });
 
@@ -175,18 +136,18 @@ searchBox.addEventListener('keydown', event => {
     if (searchResults.length > 0) {
         if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
             event.preventDefault();
-            searchResults[selectedSearchIndex]?.classList.remove('selected');
+            searchResults[selectedSearchIndex]?.classList.remove('bg-blue-100', 'text-blue-700');
             if (event.key === 'ArrowDown') {
                 selectedSearchIndex = (selectedSearchIndex + 1) % searchResults.length;
             } else if (event.key === 'ArrowUp') {
                 selectedSearchIndex = (selectedSearchIndex - 1 + searchResults.length) % searchResults.length;
             }
-            searchResults[selectedSearchIndex].classList.add('selected');
+            searchResults[selectedSearchIndex].classList.add('bg-blue-100', 'text-blue-700');
         } else if (event.key === 'Enter') {
             event.preventDefault();
             const username = searchResults[selectedSearchIndex]?.dataset.username;
             if (username) {
-                showUserCard(username);
+                showUserCardModal(username);
             }
         }
     }
@@ -195,14 +156,17 @@ searchBox.addEventListener('keydown', event => {
 // Close the user card modal
 const closeUserCardButton = document.getElementById('closeUserCard');
 closeUserCardButton.addEventListener('click', () => {
+    closeUserCardModal();
+});
+
+function closeUserCardModal() {
     const userCardModal = document.getElementById('userCardModal');
     userCardModal.style.display = 'none';
 
     const searchModal = document.getElementById('searchModal');
     searchModal.style.display = 'flex'; // Show the search modal
     searchBox.style.zIndex = 20;
-});
-
+}
 
 // Fetch user data when the page is loaded
 fetchUserData();
