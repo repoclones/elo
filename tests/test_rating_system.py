@@ -40,5 +40,5 @@ def test_normalization_function_entropy():
 
 
 if __name__ == "__main__":
-    #test_message_rating_system()
-    test_normalization_function_entropy()
+    test_message_rating_system()
+    # test_normalization_function_entropy()

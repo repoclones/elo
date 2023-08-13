@@ -3,12 +3,17 @@ import os
 from typing import List
 import time
 import json
+import sys
 
 cache_dir = "assets/.cache"
+emotelist_location = "assets/emotelist.txt"
 MAX_CACHE_AGE = 23 * 3600 # 23 hours
 
+current_dir = os.path.dirname(os.path.abspath(__file__))
+cache_dir = os.path.join(current_dir, cache_dir)
 if not os.path.exists(cache_dir):
     os.mkdir(cache_dir)
+emotelist_location = os.path.join(current_dir, emotelist_location)
 
 
 seventv_origin = "7tv.io"
@@ -32,7 +37,7 @@ def fetch_seventv_emotes() -> List[str]:
     return emote_dict["emote_list"]
 
 def fetch_other_emotes():
-    with open("assets/emotelist.txt") as f:
+    with open(emotelist_location) as f:
         emotelist = f.readlines()
     emotelist = [s.strip() for s in emotelist]
     return emotelist
