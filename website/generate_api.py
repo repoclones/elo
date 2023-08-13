@@ -2,10 +2,11 @@ import os
 import sys
 import json
 import time
+import subprocess
 
 OUTPUT_BASE_DIR = "neuroelo_web"
 NUMBER_OF_TOP_SPOTS = 20
-DEBUG = True
+DEBUG = False
 
 # not being in the root dir thing
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -13,6 +14,14 @@ parent_dir = os.path.abspath(os.path.join(current_dir, '..'))
 sys.path.append(parent_dir)
 
 import main
+
+def get_git_commit_hash():
+    try:
+        commit_hash = subprocess.check_output(["git", "rev-parse", "--short", "HEAD"]).decode("utf-8").strip()
+        return commit_hash
+    except subprocess.CalledProcessError as e:
+        print("Error:", e)
+        return None
 
 def check_dir(dir: str) -> None:
     if not os.path.exists(dir):
@@ -66,11 +75,17 @@ def generate_api():
 
     toplist = dict(list(elolist.items())[:NUMBER_OF_TOP_SPOTS])
     json.dump(toplist, open(os.path.join(api_dir, "top_list"), "w"))
+    commit_hash = get_git_commit_hash()
+    if commit_hash:
+        print("Current commit hash:", commit_hash)
+    else:
+        print("Failed to retrieve commit hash.")
 
     sysinfo = {
         "Debug": DEBUG,
         "generated at": int(time.time()),
-        "message count": len(chatlog)
+        "message count": len(chatlog),
+        "git hash": commit_hash
     }
     json.dump(sysinfo, open(os.path.join(api_dir, "info"), "w"))
 
