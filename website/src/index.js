@@ -2,10 +2,10 @@
 let userData = {};
 fetchUserData();
 
-// Function to fetch user data from /api/user_list and store it in userData
+// Function to fetch user data from api/user_list and store it in userData
 async function fetchUserData() {
     try {
-        const response = await fetch('/api/user_list');
+        const response = await fetch('api/user_list');
         userData = await response.json();
     } catch (error) {
         console.error('Error fetching user data:', error);
@@ -59,7 +59,7 @@ function showSearchResultsModal(results) {
 
 // Function to show user card modal
 function showUserCardModal(username) {
-    fetch(`/api/user/${username}`)
+    fetch(`api/user/${username}`)
         .then(response => response.json())
         .then(data => {
             const userCard = document.getElementById('userCard');
@@ -185,7 +185,7 @@ function closeUserCardModal() {
 
 // Function to fetch and display system info
 function fetchAndDisplaySystemInfo() {
-    fetch('/api/info')
+    fetch('api/info')
         .then(response => response.json())
         .then(data => {
             const systemInfoContainer = document.getElementById('systemInfo');
@@ -210,7 +210,7 @@ fetchAndDisplaySystemInfo();
 // Fetch the sorted dictionary from the API
 async function fetchTopList() {
     try {
-        const response = await fetch('/api/top_list');
+        const response = await fetch('api/top_list');
         const data = await response.json();
         return data;
     } catch (error) {
