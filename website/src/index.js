@@ -39,7 +39,6 @@ function showSearchResultsModal(results) {
 
     const searchModal = document.getElementById('searchModal');
     searchModal.style.display = 'flex'; // Show the search modal
-    searchBox.style.zIndex = -1; // Lower the z-index of search box when modal is displayed
 
     // Close the search modal when clicked outside the modal content
     searchModal.addEventListener('click', event => {
@@ -77,6 +76,9 @@ function showUserCardModal(username) {
         });
     const userCardModal = document.getElementById('userCardModal');
     userCardModal.style.display = 'flex';
+    const searchModal = document.getElementById('searchModal');
+    searchModal.style.display = 'flex';
+    searchBox.style.zIndex = '-1' // Hide the search modal
 }
 
 // Add event listener to select user from search results
@@ -183,6 +185,10 @@ const closeUserCardButton = document.getElementById('closeUserCard');
 closeUserCardButton.addEventListener('click', () => {
     const userCardModal = document.getElementById('userCardModal');
     userCardModal.style.display = 'none';
+    
+    const searchModal = document.getElementById('searchModal');
+    searchModal.style.display = 'flex'; // Show the search modal
+    searchBox.style.zIndex = 20;
 });
 
 
