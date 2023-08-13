@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEURO ELO</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Include your compiled CSS file here -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="bg-gradient-to-b from-pink-main to-pink-shadow min-h-screen flex flex-col justify-center">
@@ -22,15 +22,11 @@
     <div class="flex flex-grow justify-center overflow-x-auto">
         <div id="leaderboards" class="flex">
             <div class="w-96 pr-4">
-                <h2 class="text-xl font-semibold text-center bg-green-darker text-white p-2 mt-4 rounded-t-lg">Top Overall
+                <h2 class="text-xl font-semibold text-center bg-green-darker text-white p-2 mt-4 rounded-t-lg">Top
+                    Overall
                     Earners</h2>
                 <div id="topOverall" class="bg-green-darker p-4 shadow-md rounded-b-lg"></div>
             </div>
-            <!-- <div class="w-96 pl-4">
-                <h2 class="text-xl font-semibold text-center bg-green-darker text-white p-2 mt-4 rounded-t-lg">Top Earners
-                    from Last Stream</h2>
-                <div id="topLast" class="bg-green-darker p-4 shadow-md rounded-b-lg"></div>
-            </div> -->
         </div>
     </div>
     <div id="searchModal" class="modal">
@@ -43,6 +39,12 @@
             <div id="userCard" class="user-card-content"></div>
             <button id="closeUserCard" class="close-button">Close</button>
         </div>
+    </div>
+    <div id="systemInfo" class="system-info text-xs"></div>
+    <div class="disclaimer">
+        <p class="text-xs">
+            I have no affiliation with the vedal987 channel.
+        </p>
     </div>
     <script src="index.js"></script>
 </body>

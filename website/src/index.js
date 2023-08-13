@@ -55,20 +55,20 @@ function showUserCardModal(username) {
     fetch(`/api/user/${username}`)
         .then(response => response.json())
         .then(data => {
-            const averageEloPerMessage = data.elo / data.messages.length;
             const userCard = document.getElementById('userCard');
             userCard.innerHTML = `
                 <h2><b>${username}</b></h2>
+                <p>Ranking: <b>#${data.ranking}</b></p>
                 <p>ELO: <b>${data.elo}</b></p>
                 <p>Number of messages: <b>${data.messages.length}</b></p>
-                <p>Average ELO per message: <b>${averageEloPerMessage.toFixed(2)}</b></p>
+                <p>Average ELO per message: <b>${(data.elo / data.messages.length).toFixed(2)}</b></p>
                 <div class="message-list">
                     <h3>Messages:</h3>
                     <ul>
                         ${data.messages.map(message => `
                             <li>
                                 <span>${message[0]}</span>
-                                <span class="message-count">Count: ${message[1]}</span>
+                                <span class="message-count">ELO Δ: ${message[1]}</span>
                             </li>
                         `).join('')}
                     </ul>
@@ -175,23 +175,29 @@ function closeUserCardModal() {
     searchModal.style.display = 'flex'; // Show the search modal
     searchBox.style.zIndex = 20;
 }
-// Function to get the top 20 items based on values
-function getTop20(dictionary) {
-    const top20 = {};
-    let count = 0;
 
-    for (const [key, value] of Object.entries(dictionary)) {
-        if (count < 20) {
-            top20[key] = value;
-            count++;
-        } else {
-            break;
-        }
-    }
+// Function to fetch and display system info
+function fetchAndDisplaySystemInfo() {
+    fetch('/api/info')
+        .then(response => response.json())
+        .then(data => {
+            const systemInfoContainer = document.getElementById('systemInfo');
+            systemInfoContainer.innerHTML = '';
 
-    return top20;
+            for (const [key, value] of Object.entries(data)) {
+                const infoItem = document.createElement('div');
+                infoItem.className = 'info-item';
+                infoItem.innerHTML = `<span class="info-key">${key}:</span> <span class="info-value">${value}</span>`;
+                systemInfoContainer.appendChild(infoItem);
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching system info:', error);
+        });
 }
 
+// Fetch and display system info when the page is loaded
+fetchAndDisplaySystemInfo();
 
 // Fetch user data when the page is loaded
 // Fetch the sorted dictionary from the API

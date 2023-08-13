@@ -56,3 +56,18 @@
     font-weight: bold;
     color: #888;
 }
+
+.disclaimer {
+    position: fixed;
+    bottom: 0;
+    left: 10px;
+    padding: 5px;
+    border-radius: 4px;
+}
+.system-info {
+    position: fixed;
+    bottom: 0;
+    right: 10px;
+    padding: 5px;
+    border-radius: 4px;
+}
