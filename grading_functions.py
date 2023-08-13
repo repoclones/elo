@@ -66,6 +66,6 @@ if __name__ == "__main__":
     # Test the function with an example string
     from main import grade_text
     example_string = input()
-    grade = grade_text(example_string, 0)
+    grade = grade_text(example_string)
     print(f"Entropy grade: {grade}")
 

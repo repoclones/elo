@@ -43,7 +43,7 @@ def generate_api():
         grade = main.grade_elo(message)
         if grade:
             user, elo_delta = grade
-            user = user.lower()
+            user = user.capitalize()
             if user in elolist:
                 elolist[user]["elo"] += elo_delta
                 elolist[user]["messages"].append([message, elo_delta])
