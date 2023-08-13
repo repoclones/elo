@@ -3,6 +3,7 @@ import sys
 import json
 
 OUTPUT_BASE_DIR = "neuroelo_web"
+NUMBER_OF_TOP_SPOTS = 20
 
 # not being in the root dir thing
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -49,6 +50,11 @@ def generate_api():
     elolist = {name: data["elo"] for name, data in elolist.items()}
     elolist = dict(sorted(elolist.items(), key=lambda item: item[1], reverse=True))
     json.dump(elolist, open(os.path.join(api_dir, "user_list"), "w"))
+
+    toplist = dict(list(elolist.items())[:NUMBER_OF_TOP_SPOTS])
+    json.dump(toplist, open(os.path.join(api_dir, "top_list"), "w"))
+
+    
 
 
 if __name__ == "__main__":

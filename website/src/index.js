@@ -1,5 +1,6 @@
 // Variable to store user data
 let userData = {};
+fetchUserData();
 
 // Function to fetch user data from /api/user_list and store it in userData
 async function fetchUserData() {
@@ -167,74 +168,65 @@ function closeUserCardModal() {
     searchModal.style.display = 'flex'; // Show the search modal
     searchBox.style.zIndex = 20;
 }
+// Function to get the top 20 items based on values
+function getTop20(dictionary) {
+    const top20 = {};
+    let count = 0;
+
+    for (const [key, value] of Object.entries(dictionary)) {
+        if (count < 20) {
+            top20[key] = value;
+            count++;
+        } else {
+            break;
+        }
+    }
+
+    return top20;
+}
+
 
 // Fetch user data when the page is loaded
-fetchUserData();
+// Fetch the sorted dictionary from the API
+async function fetchTopList() {
+    try {
+        const response = await fetch('/api/top_list');
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching top list:', error);
+        return {};
+    }
+}
+// Function to render leaderboard
+function renderLeaderboard(container, data) {
+    const leaderboard = document.createElement('div');
+    leaderboard.className = 'bg-green-main rounded-lg p-5 shadow-md';
 
+    for (const [username, points] of Object.entries(data)) {
+        const entry = document.createElement('div');
+        entry.className = 'flex justify-between items-center';
 
-document.addEventListener('DOMContentLoaded', () => {
-    const searchBox = document.getElementById('searchBox');
-    const searchButton = document.getElementById('searchButton');
+        const usernameElement = document.createElement('span');
+        usernameElement.className = 'font-semibold';
+        usernameElement.textContent = username;
+
+        const pointsElement = document.createElement('span');
+        pointsElement.textContent = points;
+
+        entry.appendChild(usernameElement);
+        entry.appendChild(pointsElement);
+
+        leaderboard.appendChild(entry);
+    }
+
+    container.appendChild(leaderboard);
+}
+
+// Fetch and render top list when the page is loaded
+document.addEventListener('DOMContentLoaded', async () => {
     const topOverall = document.getElementById('topOverall');
-    const topLast = document.getElementById('topLast');
-
-    // You can add your search box functionality here
-
-    // Example data for demonstration
-    const overallData = {
-        "User1": 1000,
-        "User5": 1000,
-        "User6": 1000,
-        "User7": 850,
-        "User8": 1000,
-        "User9": 720,
-        "User0": 850,
-        "Usrr3": 720,
-        "Usbr2": 850,
-        "Us2r3": 720,
-    };
-
-    const lastData = {
-        "Us7r4": 300,
-        "User1": 1000,
-        "Us4r1": 1000,
-        "Us9r1": 1000,
-        "Us6r2": 850,
-        "Usar3": 720,
-        "Uswr2": 850,
-        "Usrr3": 720,
-        "Usqr5": 280,
-        "Urer6": 250,
-
-    };
-
-    // Function to render leaderboard
-    const renderLeaderboard = (container, data) => {
-        const leaderboard = document.createElement('div');
-        leaderboard.className = 'bg-green-main rounded-lg p-4 shadow-md';
-
-        for (const [username, points] of Object.entries(data)) {
-            const entry = document.createElement('div');
-            entry.className = 'flex justify-between items-center mb-2';
-
-            const usernameElement = document.createElement('span');
-            usernameElement.className = 'font-semibold';
-            usernameElement.textContent = username;
-
-            const pointsElement = document.createElement('span');
-            pointsElement.textContent = points;
-
-            entry.appendChild(usernameElement);
-            entry.appendChild(pointsElement);
-
-            leaderboard.appendChild(entry);
-        }
-
-        container.appendChild(leaderboard);
-    };
-
-    // Render leaderboards
-    renderLeaderboard(topOverall, overallData);
-    renderLeaderboard(topLast, lastData);
+    const topData = await fetchTopList();
+    renderLeaderboard(topOverall, topData);
 });
 
