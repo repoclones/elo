@@ -140,9 +140,14 @@ function showUserCard(username) {
 const searchBox = document.getElementById('searchBox');
 searchBox.addEventListener('input', () => {
     const query = searchBox.value;
-    const searchResults = searchUsernames(query);
-    showSearchResultsModal(searchResults);
-    // showSearchResults(searchResults);
+    if (query === '') {
+        const searchModal = document.getElementById('searchModal');
+        searchModal.style.display = 'none';
+        searchBox.style.zIndex = ''; // Reset the z-index of search box
+    } else {
+        const searchResults = searchUsernames(query);
+        showSearchResultsModal(searchResults);
+    }
 });
 
 // Add event listener to select user from search results
@@ -192,7 +197,7 @@ const closeUserCardButton = document.getElementById('closeUserCard');
 closeUserCardButton.addEventListener('click', () => {
     const userCardModal = document.getElementById('userCardModal');
     userCardModal.style.display = 'none';
-    
+
     const searchModal = document.getElementById('searchModal');
     searchModal.style.display = 'flex'; // Show the search modal
     searchBox.style.zIndex = 20;
