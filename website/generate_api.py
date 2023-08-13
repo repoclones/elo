@@ -51,8 +51,10 @@ def generate_api():
                 elolist[user]["elo"] = elo_delta
                 elolist[user]["messages"] = [[message, elo_delta]]
 
+    web_root_dir = os.path.join(current_dir, OUTPUT_BASE_DIR)
     api_dir = os.path.join(current_dir, OUTPUT_BASE_DIR, "api")
     user_dir = os.path.join(api_dir, "user")
+    check_dir(web_root_dir)
     check_dir(api_dir)
     check_dir(user_dir)
 
@@ -85,6 +87,7 @@ def generate_api():
         "Debug": DEBUG,
         "generated at": int(time.time()),
         "message count": len(chatlog),
+        "tracked users": len(elolist),
         "git hash": commit_hash
     }
     json.dump(sysinfo, open(os.path.join(api_dir, "info"), "w"))
