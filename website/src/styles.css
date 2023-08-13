@@ -5,7 +5,6 @@
 
 /* Add your custom styles here */
 #searchBox {
-    /* ... Your existing styles ... */
     z-index: 20;
     /* Add this line to adjust the z-index */
 }
@@ -18,7 +17,6 @@
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.5);
     display: none;
-    /* Change to display: none; */
     align-items: center;
     justify-content: center;
 }
@@ -42,4 +40,7 @@
     padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
+    position: fixed;
+    top: 20px; /* Adjust the value as needed */
+    right: 20px; /* Adjust the value as needed */
 }

@@ -79,6 +79,13 @@ function showUserCardModal(username) {
     const searchModal = document.getElementById('searchModal');
     searchModal.style.display = 'flex';
     searchBox.style.zIndex = '-1' // Hide the search modal
+    // Close the user card modal when clicked outside the modal content
+    userCardModal.addEventListener('click', event => {
+        if (event.target === userCardModal) {
+            userCardModal.style.display = 'none';
+            searchBox.style.zIndex = '20'; // Reset the z-index of search box
+        }
+    });
 }
 
 // Add event listener to select user from search results
