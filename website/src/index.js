@@ -1,3 +1,21 @@
+const agreedToDisclaimer = localStorage.getItem('have_agreed_to_user_generated_content_neuro_elo');
+
+if (!agreedToDisclaimer) {
+    // Display the disclaimer modal if the user hasn't agreed
+    const disclaimerModal = document.getElementById('disclaimerModal');
+    disclaimerModal.style.display = 'flex';
+
+    const proceedButton = document.getElementById('proceedButton');
+    proceedButton.addEventListener('click', () => {
+        // Set a cookie to indicate that the user has agreed to the disclaimer
+        localStorage.setItem('have_agreed_to_user_generated_content_neuro_elo', 'true');
+
+        // Close the disclaimer modal
+        disclaimerModal.style.display = 'none';
+    });
+}
+
+
 // Variable to store user data
 let userData = {};
 fetchUserData();
