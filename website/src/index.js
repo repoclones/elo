@@ -30,13 +30,20 @@ function showSearchResultsModal(results) {
     const searchResultsContainer = document.getElementById('searchResults');
     searchResultsContainer.innerHTML = '';
 
-    results.forEach(result => {
-        const resultElement = document.createElement('div');
-        resultElement.className = 'search-result';
-        resultElement.dataset.username = result.username;
-        resultElement.textContent = result.username;
-        searchResultsContainer.appendChild(resultElement);
-    });
+    if (results.length === 0) {
+        const noResultsMessage = document.createElement('div');
+        noResultsMessage.className = 'no-results';
+        noResultsMessage.textContent = 'No results found';
+        searchResultsContainer.appendChild(noResultsMessage);
+    } else {
+        results.forEach(result => {
+            const resultElement = document.createElement('div');
+            resultElement.className = 'search-result';
+            resultElement.dataset.username = result.username;
+            resultElement.textContent = result.username;
+            searchResultsContainer.appendChild(resultElement);
+        });
+    }
 
     const searchModal = document.getElementById('searchModal');
     searchModal.style.display = 'flex'; // Show the search modal
