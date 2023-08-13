@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to render leaderboard
     const renderLeaderboard = (container, data) => {
         const leaderboard = document.createElement('div');
-        leaderboard.className = 'bg-white rounded-lg p-4 shadow-md';
+        leaderboard.className = 'bg-green-main rounded-lg p-4 shadow-md';
 
         for (const [username, points] of Object.entries(data)) {
             const entry = document.createElement('div');
