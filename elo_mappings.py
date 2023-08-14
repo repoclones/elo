@@ -55,7 +55,8 @@ elo_mappings = [
             r"^\[\d{2}:\d{2}:\d{2}\] \S* removed 7TV emote \S*\.$",
             r"^\[\d{2}:\d{2}:\d{2}\] Your message was not sent because it is identical to the previous one you sent, less than 30 seconds ago\.$",
             r"^\[\d{2}:\d{2}:\d{2}\] \S* is gifting \d* Tier [123] Subs to \S*'s community!$",
-            r"^\[\d{2}:\d{2}:\d{2}\] \S* is paying forward the Gift they got from an anonymous gifter to the community!$"]
+            r"^\[\d{2}:\d{2}:\d{2}\] \S* is paying forward the Gift they got from an anonymous gifter to the community!$",
+            r"^\[\d{2}:\d{2}:\d{2}\] You are sending messages too quickly\.$"]
     },
     {
         "name": "timeout",
